@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Charges Predictor</title>
+    <!-- Google Fonts for modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and basic styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #6e8efb;
+            box-shadow: 0 0 8px rgba(110, 142, 251, 0.3);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #6e8efb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #5a6fdc;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .prediction {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #6e8efb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Insurance Charges Predictor</h2>
+
+        <form id="predictForm" action="/predict" method="post">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required placeholder="Enter your age">
+
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex">
+                <option value="1">Female</option>
+                <option value="0">Male</option>
+            </select>
+
+            <label for="bmi">BMI:</label>
+            <input type="number" id="bmi" name="bmi" step="0.1" required placeholder="Body Mass Index">
+
+            <label for="children">Children:</label>
+            <input type="number" id="children" name="children" required placeholder="Number of children">
+
+            <label for="smoker">Smoker:</label>
+            <select id="smoker" name="smoker">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <!-- Prediction result -->
+        {% if prediction_text %}
+        <div class="prediction">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Optional JS for smooth scroll to prediction -->
+    <script>
+        const form = document.getElementById('predictForm');
+        form.addEventListener('submit', () => {
+            setTimeout(() => {
+                const prediction = document.querySelector('.prediction');
+                if (prediction) {
+                    prediction.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
